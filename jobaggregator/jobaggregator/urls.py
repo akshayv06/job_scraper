@@ -17,11 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
+from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Job Aggregator Backend Running 🚀")
-
+    return HttpResponse("""
+    <h1>Job Aggregator API</h1>
+    <a href='/api/jobs'>View Jobs API</a><br>
+    <a href='/admin'>Admin Panel</a>
+    """)
 
 urlpatterns = [
     path('', home),

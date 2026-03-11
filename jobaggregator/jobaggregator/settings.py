@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'rest_framework',
     'jobs',
+    'django_filters',
 
 ]
 
@@ -143,8 +144,23 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
-    "scrape-jobs-every-minute": {
-        "task": "jobs.tasks.scrape_indeed_jobs",
-        "schedule": crontab(minute="*/1"),
+    "scrape-jobs": {
+        "task": "jobs.tasks.scrape_remoteok_jobs",
+        "schedule": crontab(minute="*/1"),  # every minute testing
     },
+}
+
+# -------------------
+# DRF Pagination
+# -------------------
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ]
 }

@@ -1,19 +1,27 @@
 from celery import shared_task
+from jobs.scrapers.remoteok_scraper import scrape_remoteok
 from .models import Job
-from .scrapers.indeed_scraper import scrape_indeed
+
 
 @shared_task
-def scrape_indeed_jobs():
+def scrape_remoteok_jobs():
 
-    jobs = scrape_indeed()
+    jobs = scrape_remoteok()
+
+    count = 0
 
     for job in jobs:
-        Job.objects.create(
-            title=job["title"],
-            company=job["company"],
-            location=job["location"],
-            source=job["source"],
-            url=job["url"]
+
+        Job.objects.update_or_create(
+            url=job["url"],   # unique identifier
+            defaults={
+                "title": job["title"],
+                "company": job["company"],
+                "location": job["location"],
+                "source": job["source"]
+            }
         )
 
-    return f"{len(jobs)} jobs saved"
+        count += 1
+
+    return f"{count} jobs processed"

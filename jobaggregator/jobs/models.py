@@ -6,7 +6,7 @@ class Job(models.Model):
     company = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     source = models.CharField(max_length=100)
-    url = models.URLField()
+    url = models.URLField(unique=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
