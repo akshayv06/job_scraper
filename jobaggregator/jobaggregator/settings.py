@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from celery.schedules import crontab
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+print("🔥 GEMINI KEY:", os.getenv("GEMINI_API_KEY"))
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -142,6 +148,8 @@ CELERY_TIMEZONE = 'UTC'
 
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 CELERY_BEAT_SCHEDULE = {
     "scrape-jobs": {

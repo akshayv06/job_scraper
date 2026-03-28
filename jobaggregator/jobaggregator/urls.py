@@ -32,4 +32,6 @@ urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
     path('api/', include('jobs.urls')),
+    path('api/agents/', include('ai.urls')),   # 🔥 ADD THIS
+
 ]

@@ -28,3 +28,9 @@ tzlocal==5.3.1
 urllib3==2.6.3
 vine==5.1.0
 wcwidth==0.6.0
+
+# 🔥 ADD THESE
+google-generativeai==0.7.2
+sentence-transformers==2.7.0
+torch==2.2.2
+pgvector==0.2.5
